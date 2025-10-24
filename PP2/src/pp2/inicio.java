@@ -71,16 +71,16 @@ public class inicio extends JFrame {
             add(b);
         }
 
-        // --- Acción del botón Log In ---
+        
         log.addActionListener(e -> {
             dispose();
-            new np();
+            new log();
         });
 
-        // --- Acción del botón Crear Player ---
+        
         np.addActionListener(e -> {
             dispose();
-            new np();
+            np NP = new np();
         });
 
         // --- Acción del botón Salir ---
