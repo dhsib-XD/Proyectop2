@@ -28,7 +28,7 @@ public class np extends JFrame {
     private JPasswordField contra = new JPasswordField();
 
     public np() {
-ncuenta.set(4, "hola");
+
         setSize(500, 500);
         setTitle("NUEVO Jugador");
         setLayout(null);

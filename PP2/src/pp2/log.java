@@ -1,29 +1,117 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pp2;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
- *
+ * Ventana de inicio de sesión
  * @author CarlosXl
  */
 public class log extends JFrame {
-     ArrayList<JTextField> ncuenta= new ArrayList<>();
-    ArrayList<JTextField> ccuenta= new ArrayList<>();
-    JTextField nom = new JTextField();
-    JPasswordField contra = new JPasswordField();
     
-    public log(){
-        Scanner scanner = new Scanner(System.in);
-        
-        
-        
+    private JTextField nom = new JTextField();
+    private JPasswordField contra = new JPasswordField();
+
+    public log() {
+        setSize(500, 500);
+        setTitle("Iniciar Sesión - Vampire Wargame");
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(25, 25, 25));
+
+        // --- Título ---
+        JLabel titulo = new JLabel("Inicia sesión en Vampire Wargame");
+        titulo.setBounds(50, 40, 400, 40);
+        titulo.setForeground(Color.WHITE);
+        titulo.setFont(new Font("Serif", Font.BOLD, 18));
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+        add(titulo);
+
+        // --- Nombre de usuario ---
+        JLabel lnom = new JLabel("Nombre:");
+        lnom.setBounds(100, 140, 100, 30);
+        lnom.setForeground(Color.LIGHT_GRAY);
+        lnom.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        add(lnom);
+
+        nom.setBounds(200, 140, 200, 30);
+        nom.setBackground(new Color(50, 50, 50));
+        nom.setForeground(Color.WHITE);
+        nom.setCaretColor(Color.WHITE);
+        nom.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        add(nom);
+
+        // --- Contraseña ---
+        JLabel lcontra = new JLabel("Contraseña:");
+        lcontra.setBounds(100, 200, 100, 30);
+        lcontra.setForeground(Color.LIGHT_GRAY);
+        lcontra.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        add(lcontra);
+
+        contra.setBounds(200, 200, 200, 30);
+        contra.setBackground(new Color(50, 50, 50));
+        contra.setForeground(Color.WHITE);
+        contra.setCaretColor(Color.WHITE);
+        contra.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        add(contra);
+
+        // --- Botón de inicio de sesión ---
+        JButton iniciar = new JButton("Iniciar sesión");
+        iniciar.setBounds(150, 280, 200, 40);
+        iniciar.setBackground(new Color(150, 0, 0));
+        iniciar.setForeground(Color.WHITE);
+        iniciar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        iniciar.setFocusPainted(false);
+        add(iniciar);
+
+        // --- Botón volver ---
+        JButton volver = new JButton("Volver al menú principal");
+        volver.setBounds(150, 340, 200, 40);
+        volver.setBackground(new Color(60, 60, 60));
+        volver.setForeground(Color.WHITE);
+        volver.setFont(new Font("SansSerif", Font.BOLD, 13));
+        volver.setFocusPainted(false);
+        add(volver);
+
+        // --- Acción del botón Iniciar sesión ---
+        iniciar.addActionListener(e -> {
+            String nombre = nom.getText();
+            String contraseña = new String(contra.getPassword());
+
+            if (verificar(nombre, contraseña)) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido, " + nombre + "!");
+                dispose();
+                // Aquí puedes abrir otra ventana del juego, por ejemplo:
+                // new MenuJuego(nombre);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nombre o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // --- Acción del botón Volver ---
+        volver.addActionListener(e -> {
+            dispose();
+            new inicio();
+        });
+
+        setVisible(true);
+    }
+
+    /**
+     * Verifica si el usuario y contraseña existen en las listas de np
+     */
+    public boolean verificar(String nombre, String contraseña) {
+        ArrayList<String> nombres = np.ncuenta;
+        ArrayList<String> contraseñas = np.ccuenta;
+
+        for (int i = 0; i < nombres.size(); i++) {
+            if (nombres.get(i).equals(nombre) && contraseñas.get(i).equals(contraseña)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
