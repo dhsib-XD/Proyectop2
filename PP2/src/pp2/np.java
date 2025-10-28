@@ -1,31 +1,23 @@
-/*
- * Click nbfs://nombhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pp2;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 /**
- *
+ * Ventana para crear nuevos jugadores con límite de 5 usuarios
+ * y contraseñas de máximo 5 caracteres.
  * @author CarlosXl
  */
 public class np extends JFrame {
+
     static ArrayList<String> ncuenta = new ArrayList<>();
     static ArrayList<String> ccuenta = new ArrayList<>();
 
     private JTextField nom = new JTextField();
-    private JPasswordField contra = new JPasswordField();
+    private JTextField contra = new JTextField(); // visible
+    private JLabel contador = new JLabel();
 
     public np() {
 
@@ -36,7 +28,7 @@ public class np extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(25, 25, 25));
 
-        // Título
+        //titulos
         JLabel p = new JLabel("Crea una cuenta de Vampire Wargame");
         p.setBounds(50, 40, 400, 40);
         p.setForeground(Color.WHITE);
@@ -44,7 +36,7 @@ public class np extends JFrame {
         p.setHorizontalAlignment(SwingConstants.CENTER);
         add(p);
 
-        // Nombre
+        // nom
         JLabel TN = new JLabel("Nombre:");
         TN.setBounds(100, 140, 100, 30);
         TN.setForeground(Color.LIGHT_GRAY);
@@ -58,9 +50,9 @@ public class np extends JFrame {
         nom.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         add(nom);
 
-        // Contraseña
-        JLabel TC = new JLabel("Contraseña:");
-        TC.setBounds(100, 200, 100, 30);
+        // contra
+        JLabel TC = new JLabel("Contraseña (máx. 5):");
+        TC.setBounds(60, 200, 150, 30);
         TC.setForeground(Color.LIGHT_GRAY);
         TC.setFont(new Font("SansSerif", Font.PLAIN, 15));
         add(TC);
@@ -72,44 +64,56 @@ public class np extends JFrame {
         contra.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         add(contra);
 
-        // Botón agregar
-        JButton add = new JButton("Agregar usuario");
-        add.setBounds(150, 280, 200, 40);
-        add.setBackground(new Color(150, 0, 0));
-        add.setForeground(Color.WHITE);
-        add.setFont(new Font("SansSerif", Font.BOLD, 14));
-        add.setFocusPainted(false);
-        add(add);
+        
 
-        // Botón volver
+        // agregar
+        JButton addBtn = new JButton("Agregar usuario");
+        addBtn.setBounds(150, 300, 200, 40);
+        addBtn.setBackground(new Color(150, 0, 0));
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        addBtn.setFocusPainted(false);
+        add(addBtn);
+
+        // volver
         JButton v = new JButton("Volver al menú principal");
-        v.setBounds(150, 340, 200, 40);
+        v.setBounds(150, 360, 200, 40);
         v.setBackground(new Color(60, 60, 60));
         v.setForeground(Color.WHITE);
         v.setFont(new Font("SansSerif", Font.BOLD, 13));
         v.setFocusPainted(false);
         add(v);
 
-        // Acción botón "Agregar usuario"
-        add.addActionListener(e -> {
-            String nombre = nom.getText();
-            String contraseña = new String(contra.getPassword());
+        // nuevo usuario
+        addBtn.addActionListener(e -> {
+            String nombre = nom.getText().trim();
+            String contraseña = contra.getText().trim();
+
+            
+
+            // Límite de longitud en contraseña
+            if (contraseña.length() > 5) {
+                JOptionPane.showMessageDialog(this,
+                        "La contraseña no puede tener más de 5 caracteres.",
+                        "Contraseña demasiado larga", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
             if (verif(nombre, contraseña)) {
                 ncuenta.add(nombre);
                 ccuenta.add(contraseña);
                 JOptionPane.showMessageDialog(this, "Usuario creado exitosamente");
-
-                
                 nom.setText("");
                 contra.setText("");
+                 
             } else {
-                JOptionPane.showMessageDialog(this, "El nombre o la contraseña son inválidos o ya existen",
+                JOptionPane.showMessageDialog(this,
+                        "El nombre o la contraseña son inválidos o ya existen",
                         "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-       
+        // volver
         v.addActionListener(e -> {
             dispose();
             new inicio();
@@ -118,8 +122,9 @@ public class np extends JFrame {
         setVisible(true);
     }
 
+    //
     public boolean verif(String nom, String contra) {
-        if (nom.isBlank()|| contra.isBlank()) {
+        if (nom.isBlank() || contra.isBlank()) {
             return false;
         }
         return !ncuenta.contains(nom);
@@ -132,7 +137,4 @@ public class np extends JFrame {
     public ArrayList<String> getCcuenta() {
         return ccuenta;
     }
-    
-   
-    
 }

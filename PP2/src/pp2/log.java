@@ -22,7 +22,7 @@ public class log extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(25, 25, 25));
 
-        // --- Título ---
+        // titulo
         JLabel titulo = new JLabel("Inicia sesión en Vampire Wargame");
         titulo.setBounds(50, 40, 400, 40);
         titulo.setForeground(Color.WHITE);
@@ -30,7 +30,7 @@ public class log extends JFrame {
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         add(titulo);
 
-        // --- Nombre de usuario ---
+        //usuario
         JLabel lnom = new JLabel("Nombre:");
         lnom.setBounds(100, 140, 100, 30);
         lnom.setForeground(Color.LIGHT_GRAY);
@@ -44,7 +44,7 @@ public class log extends JFrame {
         nom.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         add(nom);
 
-        // --- Contraseña ---
+        // contraseña
         JLabel lcontra = new JLabel("Contraseña:");
         lcontra.setBounds(100, 200, 100, 30);
         lcontra.setForeground(Color.LIGHT_GRAY);
@@ -58,7 +58,7 @@ public class log extends JFrame {
         contra.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         add(contra);
 
-        // --- Botón de inicio de sesión ---
+        //boton inicio
         JButton iniciar = new JButton("Iniciar sesión");
         iniciar.setBounds(150, 280, 200, 40);
         iniciar.setBackground(new Color(150, 0, 0));
@@ -67,7 +67,7 @@ public class log extends JFrame {
         iniciar.setFocusPainted(false);
         add(iniciar);
 
-        // --- Botón volver ---
+        /// boton volver
         JButton volver = new JButton("Volver al menú principal");
         volver.setBounds(150, 340, 200, 40);
         volver.setBackground(new Color(60, 60, 60));
@@ -82,16 +82,16 @@ public class log extends JFrame {
             String contraseña = new String(contra.getPassword());
 
             if (verificar(nombre, contraseña)) {
-                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. ¡Bienvenido, " + nombre + "!");
+               JOptionPane.showMessageDialog(this, "Entrando ", "a", JOptionPane.OK_OPTION);
                 dispose();
-                // Aquí puedes abrir otra ventana del juego, por ejemplo:
-                // new MenuJuego(nombre);
+                
+               
             } else {
                 JOptionPane.showMessageDialog(this, "Nombre o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // --- Acción del botón Volver ---
+       //volver
         volver.addActionListener(e -> {
             dispose();
             new inicio();
@@ -100,9 +100,7 @@ public class log extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * Verifica si el usuario y contraseña existen en las listas de np
-     */
+    
     public boolean verificar(String nombre, String contraseña) {
         ArrayList<String> nombres = np.ncuenta;
         ArrayList<String> contraseñas = np.ccuenta;

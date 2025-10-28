@@ -24,7 +24,7 @@ public class inicio extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setTitle("Menu Inicio");
-        setLocationRelativeTo(null); // Centrar ventana
+        setLocationRelativeTo(null); 
         getContentPane().setBackground(new Color(20, 20, 20)); 
 
         // titulo
@@ -61,11 +61,11 @@ public class inicio extends JFrame {
             
             b.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    b.setBackground(new Color(180, 0, 0)); // Más brillante
+                    b.setBackground(new Color(180, 0, 0)); 
                 }
 
                 public void mouseExited(java.awt.event.MouseEvent evt) {
-                    b.setBackground(new Color(100, 0, 0)); // Regresa al color original
+                    b.setBackground(new Color(100, 0, 0)); 
                 }
             });
             add(b);
@@ -83,7 +83,7 @@ public class inicio extends JFrame {
             np NP = new np();
         });
 
-        // --- Acción del botón Salir ---
+        // 
         exit.addActionListener(e -> {
             int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
             if (resp == JOptionPane.YES_OPTION) {
