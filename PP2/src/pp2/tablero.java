@@ -19,7 +19,7 @@ public class tablero extends JFrame {
 
     public tablero() {
         setTitle("Vampire Wargame");
-        setSize(800, 690);
+        setSize(800, 650);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(6, 6)); 
 
@@ -30,9 +30,10 @@ public class tablero extends JFrame {
 
                 
                 if ((row + col) % 2 == 0) {
-                    cell.setBackground(new Color (210,4,45));
+                    //cell.setBackground(new Color (210,4,45));
+                    cell.setBackground(Color.gray);
                 } else {
-                    cell.setBackground(Color.BLACK);
+                    cell.setBackground(Color.white);
                 }
 
                 

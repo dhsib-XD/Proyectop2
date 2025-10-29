@@ -2,6 +2,7 @@ package pp2;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -18,6 +19,18 @@ public class log extends JFrame {
         setSize(500, 500);
         setTitle("Iniciar Sesión - Vampire Wargame");
         setLayout(null);
+        
+         ImageIcon img = new ImageIcon(getClass().getResource("/pp2/fondo_warframe.jpg"));
+        Image imagenEscalada = img.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+        JLabel fondo = new JLabel(new ImageIcon(imagenEscalada));
+        fondo.setLayout(null); 
+        setContentPane(fondo); 
+
+        
+        JPanel panel = new JPanel(null);
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, 500, 500);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(25, 25, 25));
@@ -25,7 +38,7 @@ public class log extends JFrame {
         // titulo
         JLabel titulo = new JLabel("Inicia sesión en Vampire Wargame");
         titulo.setBounds(50, 40, 400, 40);
-        titulo.setForeground(Color.WHITE);
+        titulo.setForeground(Color.black);
         titulo.setFont(new Font("Serif", Font.BOLD, 18));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         add(titulo);
@@ -33,7 +46,7 @@ public class log extends JFrame {
         //usuario
         JLabel lnom = new JLabel("Nombre:");
         lnom.setBounds(100, 140, 100, 30);
-        lnom.setForeground(Color.LIGHT_GRAY);
+        lnom.setForeground(Color.black);
         lnom.setFont(new Font("SansSerif", Font.PLAIN, 15));
         add(lnom);
 
@@ -47,7 +60,7 @@ public class log extends JFrame {
         // contraseña
         JLabel lcontra = new JLabel("Contraseña:");
         lcontra.setBounds(100, 200, 100, 30);
-        lcontra.setForeground(Color.LIGHT_GRAY);
+        lcontra.setForeground(Color.black);
         lcontra.setFont(new Font("SansSerif", Font.PLAIN, 15));
         add(lcontra);
 
@@ -96,7 +109,8 @@ public class log extends JFrame {
             dispose();
             new inicio();
         });
-
+       fondo.add(panel);   
+        setContentPane(fondo); 
         setVisible(true);
     }
 

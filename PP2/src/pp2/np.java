@@ -2,6 +2,7 @@ package pp2;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -24,6 +25,13 @@ public class np extends JFrame {
         setSize(500, 500);
         setTitle("NUEVO Jugador");
         setLayout(null);
+        
+        ImageIcon img = new ImageIcon(getClass().getResource("/pp2/fondo_warframe.jpg"));
+        Image imagenEscalada = img.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+        JLabel fondo = new JLabel(new ImageIcon(imagenEscalada));
+        fondo.setLayout(null); 
+        
+        setContentPane(fondo); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(25, 25, 25));
@@ -31,7 +39,7 @@ public class np extends JFrame {
         //titulos
         JLabel p = new JLabel("Crea una cuenta de Vampire Wargame");
         p.setBounds(50, 40, 400, 40);
-        p.setForeground(Color.WHITE);
+        p.setForeground(Color.BLACK);
         p.setFont(new Font("Serif", Font.BOLD, 18));
         p.setHorizontalAlignment(SwingConstants.CENTER);
         add(p);
@@ -39,7 +47,7 @@ public class np extends JFrame {
         // nom
         JLabel TN = new JLabel("Nombre:");
         TN.setBounds(100, 140, 100, 30);
-        TN.setForeground(Color.LIGHT_GRAY);
+        TN.setForeground(Color.black);
         TN.setFont(new Font("SansSerif", Font.PLAIN, 15));
         add(TN);
 
