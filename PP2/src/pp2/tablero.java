@@ -22,7 +22,6 @@ public class tablero extends JFrame {
                 cell.setOpaque(true);
                 cell.setBorderPainted(false);
 
-                // Color de tablero tipo ajedrez
                 if ((row + col) % 2 == 0) {
                     cell.setBackground(Color.gray);
                 } else {
@@ -30,11 +29,8 @@ public class tablero extends JFrame {
                 }
 
                 b[row][col] = cell;
-
-                // --- COLOCAR PIEZAS ---
                 colocarPiezas(row, col, cell);
 
-                // --- ESCUCHAR CLICS ---
                 final int r = row, c = col;
                 cell.addActionListener(e -> manejarClick(r, c));
 
@@ -43,14 +39,9 @@ public class tablero extends JFrame {
         }
     }
 
-    // =====================
-    // MÉTODOS DEL TABLERO
-    // =====================
-
     private void colocarPiezas(int row, int col, JButton cell) {
         if ((row == 0 && (col == 0 || col == 5)) || (row == 5 && (col == 0 || col == 5))) {
             setImage(cell, "/pp2/HL.jpeg");
-            
         } else if ((row == 0 && (col == 1 || col == 4)) || (row == 5 && (col == 1 || col == 4))) {
             setImage(cell, "/pp2/Vampiro.jpeg");
         } else if ((row == 0 && (col == 2 || col == 3)) || (row == 5 && (col == 2 || col == 3))) {
@@ -64,52 +55,53 @@ public class tablero extends JFrame {
         boton.setIcon(new ImageIcon(scaled));
     }
 
-    // =====================
-    // LÓGICA DE MOVIMIENTO
-    // =====================
-
     private void manejarClick(int row, int col) {
         JButton cell = b[row][col];
 
-        
-        if (selectedRow == -1 && selectedCol == -1) {
+        if (selectedRow == -1 && selectedCol == -1) {                               
             if (cell.getIcon() != null) { 
                 selectedRow = row;
                 selectedCol = col;
-                cell.setBackground(Color.green); 
+                cell.setBackground(Color.GREEN); 
             }
-
-         
         } else {
             JButton selectedCell = b[selectedRow][selectedCol];
 
-            
             if (row == selectedRow && col == selectedCol) {
                 resetSelection();
                 return;
             }
 
-            // Mover a cualquier dirección
-            moverPieza(selectedRow, selectedCol, row, col);
+            if (esMovimientoValido(selectedRow, selectedCol, row, col)) {
+                moverPieza(selectedRow, selectedCol, row, col);
+            } else {
+                JOptionPane.showMessageDialog(this, "Movimiento no permitido. Solo se puede mover una casilla por turno.");
+            }
+
             resetSelection();
         }
+    }
+
+    private boolean esMovimientoValido(int fromRow, int fromCol, int toRow, int toCol) {
+        int diffRow = Math.abs(toRow - fromRow);
+        int diffCol = Math.abs(toCol - fromCol);
+        return diffRow <= 1 && diffCol <= 1;
     }
 
     private void moverPieza(int fromRow, int fromCol, int toRow, int toCol) {
         JButton origen = b[fromRow][fromCol];
         JButton destino = b[toRow][toCol];
 
-        if (destino.getIcon() == null) { // Solo mover si está vacía
+        if (destino.getIcon() == null) {
             destino.setIcon(origen.getIcon());
             origen.setIcon(null);
             System.out.println("Pieza movida de (" + fromRow + "," + fromCol + ") a (" + toRow + "," + toCol + ")");
         } else {
-            System.out.println("Esa casilla ya está ocupada.");
+            JOptionPane.showMessageDialog(this, "La casilla destino está ocupada.");
         }
     }
 
     private void resetSelection() {
-        // restaurar colores de fondo
         for (int r = 0; r < 6; r++) {
             for (int c = 0; c < 6; c++) {
                 if ((r + c) % 2 == 0) {
@@ -123,9 +115,6 @@ public class tablero extends JFrame {
         selectedCol = -1;
     }
 
-    // =====================
-    // MAIN
-    // =====================
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new tablero().setVisible(true));
     }
