@@ -1,52 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pp2;
 
-/**
- *
- * @author CarlosXl
- */
-public abstract class Pieza  {
-    String tp;
-    int vida;
-    int dano;
-    
-public Pieza(String tp,int vida,int dano){
+public abstract class Pieza {
+    protected String tipo;
+    protected int vida;
+    protected int daño;
+    protected int escudo; // 🛡️ Nuevo atributo
 
-    
-}
+    public Pieza(String tipo, int vida, int daño, int escudo) {
+        this.tipo = tipo;
+        this.vida = vida;
+        this.daño = daño;
+        this.escudo = escudo;
+    }
 
-    public String getTp() {
-        return tp;
+    public String getTipo() {
+        return tipo;
     }
 
     public int getVida() {
         return vida;
     }
 
-    public int getDano() {
-        return dano;
+    public int getDaño() {
+        return daño;
     }
 
-public void recibirD(int cantidad){
-    vida -=cantidad;
-     if (vida < 0){
-         vida = 0;
-     }
-}
+    public int getEscudo() {
+        return escudo;
+    }
 
-public boolean sinHP(){
-    return vida<=0;
-}
+    public void recibirDaño(int cantidad) {
+        System.out.println(tipo + " recibe un ataque de " + cantidad + " puntos.");
 
-public void atacar(Pieza objetivo){
-    objetivo.recibirD(this.dano);
-}
+        if (escudo > 0) {
+            int dañoAlEscudo = Math.min(cantidad, escudo);
+            escudo -= dañoAlEscudo;
+            cantidad -= dañoAlEscudo;
+            System.out.println(tipo + " pierde " + dañoAlEscudo + " puntos de escudo. Escudo restante: " + escudo);
+        }
 
+        if (cantidad > 0) {
+            vida -= cantidad;
+            if (vida < 0) vida = 0;
+            System.out.println(tipo + " pierde " + cantidad + " puntos de vida. Vida restante: " + vida);
+        }
+    }
+
+    public boolean sinHP() {
+        return vida > 0;
+    }
+
+    public void atacar(Pieza objetivo) {
+        objetivo.recibirDaño(this.daño);
+    }
+
+    @Override
     public String toString() {
-        return tp + " (vida: " + vida + ")";
+        return tipo + " (vida: " + vida + ", escudo: " + escudo + ")";
     }
 }
-

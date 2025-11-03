@@ -1,11 +1,11 @@
 package pp2;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class tablero extends JFrame {
     private JButton[][] b = new JButton[6][6]; 
+    private Pieza[][] piezas = new Pieza[6][6]; // Nueva matriz lógica
     private int selectedRow = -1;
     private int selectedCol = -1;
 
@@ -22,11 +22,10 @@ public class tablero extends JFrame {
                 cell.setOpaque(true);
                 cell.setBorderPainted(false);
 
-                if ((row + col) % 2 == 0) {
+                if ((row + col) % 2 == 0)
                     cell.setBackground(Color.gray);
-                } else {
+                else
                     cell.setBackground(Color.white);
-                }
 
                 b[row][col] = cell;
                 colocarPiezas(row, col, cell);
@@ -42,10 +41,13 @@ public class tablero extends JFrame {
     private void colocarPiezas(int row, int col, JButton cell) {
         if ((row == 0 && (col == 0 || col == 5)) || (row == 5 && (col == 0 || col == 5))) {
             setImage(cell, "/pp2/HL.jpeg");
+            piezas[row][col] = new Pieza("Humano Lobo", 5, 5,2) {};
         } else if ((row == 0 && (col == 1 || col == 4)) || (row == 5 && (col == 1 || col == 4))) {
             setImage(cell, "/pp2/Vampiro.jpeg");
+            piezas[row][col] = new Pieza("Vampiro", 4, 3,5) {};
         } else if ((row == 0 && (col == 2 || col == 3)) || (row == 5 && (col == 2 || col == 3))) {
             setImage(cell, "/pp2/Necromancer.jpeg");
+            piezas[row][col] = new Pieza("Necromancer", 3, 4,1) {};
         }
     }
 
@@ -59,7 +61,7 @@ public class tablero extends JFrame {
         JButton cell = b[row][col];
 
         if (selectedRow == -1 && selectedCol == -1) {                               
-            if (cell.getIcon() != null) { 
+            if (piezas[row][col] != null) { 
                 selectedRow = row;
                 selectedCol = col;
                 cell.setBackground(Color.GREEN); 
@@ -73,7 +75,7 @@ public class tablero extends JFrame {
             }
 
             if (esMovimientoValido(selectedRow, selectedCol, row, col)) {
-                moverPieza(selectedRow, selectedCol, row, col);
+                moverOAtacar(selectedRow, selectedCol, row, col);
             } else {
                 JOptionPane.showMessageDialog(this, "Movimiento no permitido. Solo se puede mover una casilla por turno.");
             }
@@ -88,16 +90,31 @@ public class tablero extends JFrame {
         return diffRow <= 1 && diffCol <= 1;
     }
 
-    private void moverPieza(int fromRow, int fromCol, int toRow, int toCol) {
+    private void moverOAtacar(int fromRow, int fromCol, int toRow, int toCol) {
+        Pieza atacante = piezas[fromRow][fromCol];
+        Pieza objetivo = piezas[toRow][toCol];
         JButton origen = b[fromRow][fromCol];
         JButton destino = b[toRow][toCol];
 
-        if (destino.getIcon() == null) {
+        if (objetivo == null) {
+            
             destino.setIcon(origen.getIcon());
+            piezas[toRow][toCol] = atacante;
+            piezas[fromRow][fromCol] = null;
             origen.setIcon(null);
-            System.out.println("Pieza movida de (" + fromRow + "," + fromCol + ") a (" + toRow + "," + toCol + ")");
         } else {
-            JOptionPane.showMessageDialog(this, "La casilla destino está ocupada.");
+            // Combate
+            atacante.atacar(objetivo);
+            JOptionPane.showMessageDialog(this, atacante.getTipo() + " ataca a " + objetivo.getTipo() +
+                    " (vida restante: " + objetivo.getVida() + ")");
+
+            if (!objetivo.sinHP()) {
+                JOptionPane.showMessageDialog(this, objetivo.getTipo() + " ha muerto!");
+                destino.setIcon(origen.getIcon());
+                piezas[toRow][toCol] = atacante;
+                piezas[fromRow][fromCol] = null;
+                origen.setIcon(null);
+            }
         }
     }
 
