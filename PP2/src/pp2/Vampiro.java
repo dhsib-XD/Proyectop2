@@ -18,8 +18,8 @@ public class Vampiro extends Pieza {
     public void atacar(Pieza objetivo) {
         // Aplica el ataque normal
         super.atacar(objetivo);
-
-        // Luego absorbe 1 punto de vida si sigue vivo
+ this.vida += 1;
+        
         if (this.sinHP()) {
             this.vida += 1;
             System.out.println("El vampiro roba 1 punto de vida. Vida actual: " + this.vida);
