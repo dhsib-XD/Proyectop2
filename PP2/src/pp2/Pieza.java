@@ -3,13 +3,13 @@ package pp2;
 public abstract class Pieza {
     protected String tipo;
     protected int vida;
-    protected int daño;
-    protected int escudo; // 🛡️ Nuevo atributo
+    protected int dano;
+    protected int escudo;
 
-    public Pieza(String tipo, int vida, int daño, int escudo) {
-        this.tipo = tipo;
+    public Pieza(String tp, int vida, int dano, int escudo) {
+        this.tipo = tp;
         this.vida = vida;
-        this.daño = daño;
+        this.dano = dano;
         this.escudo = escudo;
     }
 
@@ -21,41 +21,30 @@ public abstract class Pieza {
         return vida;
     }
 
-    public int getDaño() {
-        return daño;
-    }
-
     public int getEscudo() {
         return escudo;
     }
 
-    public void recibirDaño(int cantidad) {
-        System.out.println(tipo + " recibe un ataque de " + cantidad + " puntos.");
-
-        if (escudo > 0) {
-            int dañoAlEscudo = Math.min(cantidad, escudo);
-            escudo -= dañoAlEscudo;
-            cantidad -= dañoAlEscudo;
-            System.out.println(tipo + " pierde " + dañoAlEscudo + " puntos de escudo. Escudo restante: " + escudo);
-        }
-
-        if (cantidad > 0) {
-            vida -= cantidad;
-            if (vida < 0) vida = 0;
-            System.out.println(tipo + " pierde " + cantidad + " puntos de vida. Vida restante: " + vida);
-        }
-    }
-
+    // 🔹 Ahora devuelve true si la pieza está sin vida
     public boolean sinHP() {
-        return vida > 0;
+        return vida <= 0;
     }
 
+    // ⚔️ Ataque genérico (afecta primero el escudo)
     public void atacar(Pieza objetivo) {
-        objetivo.recibirDaño(this.daño);
-    }
+        int danoRestante = dano;
 
-    @Override
-    public String toString() {
-        return tipo + " (vida: " + vida + ", escudo: " + escudo + ")";
+        if (objetivo.escudo > 0) {
+            int danoEscudo = Math.min(danoRestante, objetivo.escudo);
+            objetivo.escudo -= danoEscudo;
+            danoRestante -= danoEscudo;
+        }
+
+        if (danoRestante > 0) {
+            objetivo.vida -= danoRestante;
+        }
+
+        if (objetivo.vida < 0)
+            objetivo.vida = 0;
     }
 }

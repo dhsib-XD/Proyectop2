@@ -10,14 +10,20 @@ package pp2;
  */
 public class NecroMancer extends Pieza {
     
-    public NecroMancer(String tp, int vida, int dano,int escudo) {
-        super("NecroMancer", 3, 4,1);
+  public NecroMancer() {
+        super("Necromancer", 4, 3, 1);
     }
-    
+
     @Override
     public void atacar(Pieza objetivo) {
         super.atacar(objetivo);
-        System.out.println("El necromancer lanza un hechizo oscuro contra " + objetivo.getTipo());
+        System.out.println(" El necromancer lanza un ataque oscuro.");
     }
     
+    public Zombie invocar() {
+        System.out.println("️ El necromancer invoca un zombie!");
+        return new Zombie();
+    }
 }
+    
+

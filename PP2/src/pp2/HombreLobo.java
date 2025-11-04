@@ -10,6 +10,12 @@ package pp2;
  */
 public class HombreLobo extends Pieza {
      public HombreLobo() {
-        super("Hombre Lobo", 5, 5,2);
+        super("Hombre Lobo", 5, 5, 2);
+    }
+
+    @Override
+    public void atacar(Pieza objetivo) {
+        super.atacar(objetivo);
+        System.out.println(" El hombre lobo ataca con furia.");
     }
 }
