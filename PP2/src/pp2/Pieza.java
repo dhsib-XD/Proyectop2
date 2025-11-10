@@ -25,26 +25,46 @@ public abstract class Pieza {
         return escudo;
     }
 
-    // 🔹 Ahora devuelve true si la pieza está sin vida
     public boolean sinHP() {
         return vida <= 0;
     }
 
-    // ⚔️ Ataque genérico (afecta primero el escudo)
-    public void atacar(Pieza objetivo) {
-        int danoRestante = dano;
+    
+    public abstract void atacar(Pieza objetivo);
+    
+    
+    public void recibirDano(int cantidadDano, boolean ignoraEscudo) {
+        
+        if (ignoraEscudo) {
+           
+            this.vida -= cantidadDano;
+            
+        } else {
+            
+            if (this.escudo > 0) {
+                
+                this.escudo = Math.max(0, this.escudo - cantidadDano);
 
-        if (objetivo.escudo > 0) {
-            int danoEscudo = Math.min(danoRestante, objetivo.escudo);
-            objetivo.escudo -= danoEscudo;
-            danoRestante -= danoEscudo;
+            } else {
+               
+                this.vida -= cantidadDano;
+            }
         }
-
-        if (danoRestante > 0) {
-            objetivo.vida -= danoRestante;
+        
+       
+        if (this.vida < 0) {
+            this.vida = 0;
         }
+        if (this.escudo < 0) {
+            this.escudo = 0;
+        }
+    }
 
-        if (objetivo.vida < 0)
-            objetivo.vida = 0;
+    public void setVida(int vida) {
+        this.vida = Math.max(0, vida);
+    }
+    
+    public void setEscudo(int escudo) {
+        this.escudo = Math.max(0, escudo);
     }
 }

@@ -8,7 +8,7 @@ public class Zombie extends Pieza {
 
     @Override
     public void atacar(Pieza objetivo) {
-        super.atacar(objetivo);
-        System.out.println("💀 El zombie muerde a " + objetivo.getTipo());
+         objetivo.recibirDano(this.dano, false);
+        System.out.println(" El zombie muerde a " + objetivo.getTipo());
     }
 }
